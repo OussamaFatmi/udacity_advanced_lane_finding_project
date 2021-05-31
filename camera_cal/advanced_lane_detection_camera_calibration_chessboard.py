@@ -46,7 +46,7 @@ def get_img_obj_points(images,nx, ny, saveas_dir):
     return imgpoints, objpoints
 
 #################################################################################################################
-def calibrate_undist(images, imgpoints, objpoints, saveas_dir)
+def calibrate_undist(images, imgpoints, objpoints, saveas_dir):
     # calibrate
     img_size = mpimg.imread(images[0]).shape[1::-1]
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, img_size, None, None)
@@ -56,7 +56,7 @@ def calibrate_undist(images, imgpoints, objpoints, saveas_dir)
     db = {}
     db['mtx'] = mtx
     db['dist'] = dist
-    pickle.dumb(db, db_file)
+    pickle.dump(db, db_file)
     db_file.close()
 
     # undist images
@@ -85,7 +85,7 @@ images=glb.glob('./calibration*.jpg')
 new_dir = './withCorners/'
 create_new_folder (new_dir)
 #get image points and object points
-imgpoints, objpoints=get_img_obj_points(images, nx, ny, saveas_dir)
+imgpoints, objpoints=get_img_obj_points(images, nx, ny, new_dir)
 
 ###########create undistorted chessboard images and export mtx and dist data###########
 #create folder to save the new img in
