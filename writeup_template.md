@@ -31,7 +31,26 @@ The goals / steps of this project are the following:
 
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
----
+- A seperate code (.\camera_cal\advanced_lane_detection_camera_calibration_chessboard.py) is used to calculate distortion coefficients by running this code, the folder .\camera_cal\ will be populated by two subfolders 
+	+withCorners : all chessboard images are saved with all corners highlighted 
+	+undistorted : all chessboad images undistorted together with a binary file including the undistortion coefficients
+
+- A second seperate code (.\test_images\transform_matrix.py) is calculating the transform matrix, this is achieved by defining a rectangular shape in the image (using a straight lane's lines which are known to be parallel) and to project it to a bird view perspective. during this step, the transform matrix is not applied to any image, the objective is only to export the matrix to a binary file to use it later
+
+- in the main image processor, the following steps are considered 
+	1/Load the distortion coefficients from the binary file and apply it to the image or frame of the video 
+	2/Load the transform matrix as well and obtain a bird view image
+	3/Filter noise with gaussian_blur
+	4/Apply thresholds to get a binary image by combining 
+		+Extracting white lane line(s) from L-channel of LUV color space 
+		+Extracting yellow lane line(s) from B-channel of LAB color space
+		+Applying sobel gradient in both x and y direction 
+		+Applying magnitude and direction gradients
+	5/Depending on whether a presious line was detected or not 
+		+Perform a search to find active pixels within rectangles areas to find the line for the first time 
+		+Search within a margin around prvious line's poly (average on last n fits) if available
+		
+	6/Fill the area between the two lines with a green color
 
 ### Writeup / README
 

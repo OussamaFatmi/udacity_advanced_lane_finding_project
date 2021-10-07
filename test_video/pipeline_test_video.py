@@ -774,7 +774,7 @@ def process_image(img):
 
     # Apply and combine thresholds
     bin_result_combined=apply_gradient_and_colors_thresholds(blurr_warped, thresh_white, thresh_yellow, ksize, thresh_x, thresh_y,thresh_mag, thresh_dir)
-    print(bin_result_combined.shape)
+    #print(bin_result_combined.shape)
     #save_img_as(fname, './Output/', '_bin_result_combined', bin_result_combined)
 
 
